@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+
+    <!-- 在Vue.js中，`v-for`是一个用于循环渲染列表的指令。当使用`v-for`指令时，为了提高性能和确保正确的更新，我们需要为每个被渲染的元素设置一个唯一的`key`属性。
+
+`key`属性在Vue.js中用于跟踪每个节点的身份，以便在数据发生变化时，Vue可以高效地更新虚拟DOM。当数据发生变化时，Vue会根据新旧节点的`key`属性来确定哪些节点需要更新、删除或添加。
+
+如果没有设置`key`属性，Vue会使用默认的更新策略，即基于节点的顺序进行更新。这可能会导致一些意外的行为，例如重新排序或重新渲染错误的元素。
+
+通过为每个循环项设置唯一的`key`属性，Vue可以更准确地追踪每个节点的变化，并且能够更高效地更新DOM。这样可以避免不必要的DOM操作，提高性能并确保正确的渲染结果。
+
+因此，为了正确地使用`v-for`指令并确保 性能，我们应该始终为循环项设置一个唯一的`key`属性。通常，可以使用唯一标识符（如ID）作为`key`值，但在某些情况下，也可以使用其他唯一的属性或计算属性作为`key`值-->.
+
+    <div id="box">
+        <ul>
+            <li  v-for="(item,index) of dataList" :key="index"> <!--of in -->
+                {{item}}--{{index}}
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="(item,key) in obj">
+                {{key}}--{{item}}
+            </li>
+        </ul>
+
+        <ul>
+            <li v-for="item in 1000" :key="item">
+                {{item}}
+            </li>
+        </ul>
+       
+    </div>
+
+    <script>
+        var vm=new Vue({
+            el: "#box",
+            data: {
+                dataList: ["112","141","2222"],
+                obj:{
+                    name: "xym",
+                    age: 18,
+                    sex: "男"
+                }
+             }
+        })
+
+        // vm.dataList[0]="zenglihua"//vue2这样不能能监听改变，不会更新dom，必须通过Vue.set
+        Vue.set(vm.dataList,0,"zzzzz")
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+
+    <style>
+
+
+        .aa{
+            font-size: 28px;
+            font-style: italic;
+        }
+
+        .bb{
+            color: red;
+        }
+
+        .cc{
+            background-color: greenyellow;
+        }
+
+        .dd{
+            border: 1px solid gray;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div :class="classobj">
+            动态切换class-1-对象
+        </div>
+        <div :class="classarr">
+            动态切换class-2-数组
+        </div>
+
+        <div :style="styleobj" @click="changestyle">
+            动态切换style-2-对象
+        </div>
+
+        <div :style="stylearr" @click="changestyle">
+            动态切换style-2-数组
+        </div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el: "#box",
+            data: {
+                classobj:{
+                    aa:true,
+                    bb:true,
+                    cc:false
+                },
+                classarr:["aa","bb"],
+                styleobj:{
+                    backgroundColor:'red'
+                },
+                stylearr:[{backgroundColor:"green"}]
+             },
+             methods: {
+                changestyle(){
+                    // vm.styleobj.fontSize='30px'//这样不能动态添加
+                    console.log(this)
+                    Vue.set(vm.classobj,"dd",true)
+                    Vue.set(vm.styleobj,"fontSize","30px")//vue2只能这样添加
+                    this.stylearr.push({fontSize:"70px"})
+                    this.classarr.push("dd")
+                }
+              }
+
+        })
+
+       
+
+
+        //vue2 对象方式不支持动态增加属性拦截，这是它的限制 解决方案，Vue.set(对象，属性，true) Vue.set(vm.classobj,"dd",true)
+        //vue3支持动态增加属性拦截
+    </script>
+</body>
+</html>

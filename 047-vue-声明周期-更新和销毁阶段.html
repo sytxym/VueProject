@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        {{myname}}
+        <button @click="change">change</button>
+        <button @click="destroyComponent">destroy</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#box',
+            data: {
+                myname: "xym"
+            },
+            beforeUpdate: function () {
+                console.log('beforeUpdate: 组件更新之前', this.myname);
+                // 在这里可以访问到更新前的数据和DOM
+            },
+            updated: function () {
+                console.log('updated: 组件更新完成', this.myname);
+                // 在这里可以访问到更新后的数据和DOM
+                // 例如更新第三方库、执行动画效果等
+            },
+            beforeDestroy: function () {
+                console.log('beforeDestroy: 组件销毁之前');
+                // 在这里可以访问到组件的数据和方法
+                // 在这个阶段进行一些清理工作，例如取消订阅事件、释放资源等.
+            },
+            destroyed: function () {
+                console.log('destroyed: 组件销毁完成');
+                // 在这里无法再访问到组件的数据和方法
+                //在这个阶段进行一些清理工作，例如取消订阅事件、释放资源等。
+            },
+            methods: {
+                change() {
+                    this.myname = "zenglihua"
+                },
+                destroyComponent () {
+                    this.$destroy();
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

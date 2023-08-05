@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue3.js"></script>
+    
+    <style>
+
+
+        .aa{
+            font-size: 28px;
+            font-style: italic;
+        }
+
+        .bb{
+            color: red;
+        }
+
+        .cc{
+            background-color: greenyellow;
+        }
+
+        .dd{
+            border: 1px solid gray;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="box">
+        {{myname}}
+
+        <div :class="classobj" @click="clickAdd">动态切换class-1-对象</div>
+        <div :class="classArr" @click="clickAdd">动态切换class-2-数组</div>
+    </div>
+
+    
+    <script>
+        var obj={
+            data(){
+                return {
+                    myname:"xym",
+                    classobj:{
+                        aa:true,
+                        bb:true,
+                        cc:false
+                    },
+                    classArr:["aa","cc"]
+                 }
+            },
+            methods:{
+                clickAdd(){
+                    this.classobj.dd=true
+                    this.classArr.push("bb",true)
+                }
+             }
+         }
+
+         Vue.createApp(obj).mount("#box");
+    </script>
+</body>
+</html>

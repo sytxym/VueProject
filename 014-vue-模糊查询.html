@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <input type="text" @input="searchValue()" v-model="mytext">
+        <ul>
+            <li v-for="(item,index) in datalist" :item="index">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                mytext: "",
+                datalist: ["11", "222", "2221", "111111", "aaa", "ccc", "ddd", "ccc", "33333", "134414", "12313144", "9947511", "ad", "cd"],
+                origindataList: ["11", "222", "2221", "111111", "aaa", "ccc", "ddd", "ccc", "33333", "134414", "12313144", "9947511", "ad", "cd"]
+            },
+            methods: {
+                searchValue() {
+                    console.log(this.mytext)
+                    var arr=this.origindataList.filter(item=> {
+                        return item.includes(this.mytext)
+                    })
+                    this.datalist=arr
+                    console.log(arr)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

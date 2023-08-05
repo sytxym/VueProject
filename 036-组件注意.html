@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+<body>
+    <div id="box">
+        {{title}}
+        <child :mytitle="title"></child>
+    </div>
+    <script>
+
+            Vue.component("child",{
+                props:["mytitle"],
+                //v-once 一次性修改
+                template: `<div v-once>child-{{mytitle}} 
+                        <button @click="handleClick">click</button>
+                    </div>`,
+                methods: {
+                    handleClick(){
+                        this.mytitle="22222222222"//props的属性不建议改 data下的状态可以改
+                    }
+                 }    
+            })
+            new Vue({
+            el: "#box",
+            data: {
+                title:"111111111111"
+             }
+         })
+    </script>
+</body>
+</html>

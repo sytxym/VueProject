@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/swiper-bundle.js"></script>
+    <link rel="stylesheet" href="lib/swiper-bundle.css">
+    <script src="lib/vue.js"></script>
+    <style>
+        .swiper {
+            width: 600px;
+            height: 300px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <swiper :key="list.length" :loop="false">
+            <swiper-item v-for="item in list" :key="item">
+                <img :src="item" alt="">
+            </swiper-item>
+        </swiper>
+    </div>
+
+    <script>
+
+        function init(loop) {
+
+            new Swiper(".zenglihua", {
+                pagination: {
+                    el: '.swiper-pagination'
+                },
+                // 如果需要前进后退按钮
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                },// 如果需要滚动条
+                scrollbar: {
+                    el: '.swiper-scrollbar'
+                },
+                loop: loop,
+                autoplay: {
+                    delay: 3000,
+                    stopOnLastSlide: false,
+                    disableOnInteraction: true,
+                },
+                on: {
+                    slideChange: function () {
+                        console.log("下标", this.activeIndex)
+                    }
+                }
+            })
+        }
+
+        Vue.component("swiperItem", {
+            template: `
+            <div class="swiper-slide"><slot></slot></div>
+            `
+        })
+
+        Vue.component("swiper", {
+            props:{
+                loop:{
+                    type:Boolean,
+                    default:true
+                }
+            },
+            template: `
+            <div class="swiper zenglihua">
+                <div class="swiper-wrapper">
+                   <slot></slot>
+                </div>
+                <!-- 如果需要分页器 -->
+                <div class="swiper-pagination"></div>
+            </div>
+            `,
+            mounted: function () {
+                init(this.loop)
+            },
+            updated: function () {
+              
+            }
+
+        })
+
+        new Vue({
+            el: "#box",
+            data: {
+                list: []
+            },
+            mounted() {
+                setTimeout(() => {//模拟ajax异步，延迟一下
+                    this.list = ["img/banner1.jpg", "img/banner2.jpg", "img/banner1.jpg", "img/banner2.jpg"]
+                }, 2000)
+            }
+        })
+    </script>
+
+</body>
+
+</html>

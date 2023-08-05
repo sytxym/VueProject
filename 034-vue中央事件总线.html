@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .item {
+            overflow: hidden;
+            margin: 10px;
+        }
+
+        .item img {
+            float: left;
+            width: 100px;
+            margin-right: 10px;
+        }
+
+        .itemdetail {
+            position: fixed;
+            right: 50px;
+            top: 100px;
+            background-color: yellow;
+            width: 400px;
+            height: 400px;
+            padding: 20px;
+            line-height: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <button @click="handleAjax">ajax</button>
+
+        <film-item v-for="item in datalist" :key="item.filmId" :mydata="item"></film-item>
+
+        <film-detail></film-detail>
+
+        {{myitemData}}
+    </div>
+    <script>
+
+        var bus = new Vue()
+        //bus.$on
+        //bus.$emit
+
+
+        Vue.component("filmItem", {
+            props: ["mydata"],
+            template: `
+            <div class="item">
+                <img :src="mydata.poster"/>
+                {{mydata.name}}
+                <button @click="handleClick">查看详情</button>
+            </div>
+            `,
+            methods: {
+                handleClick() {
+                    console.log(this.mydata.synopsis)
+                    bus.$emit("xym", this.mydata.synopsis)
+                }
+            }
+        })
+
+        Vue.component("filmDetail", {
+
+            //生命周期
+            mounted: function () {//组件创建时候触发
+                bus.$on("xym", (synopsis) => {
+                    console.log("bus on",synopsis)
+                    this.synopsis=synopsis
+                })
+            },
+            data(){
+                return {
+                    synopsis:""
+                }
+            },
+            template: `
+            <div class="itemdetail">
+                <h1>详情信息</h1>
+                {{ this.synopsis}}
+            </div>    
+            `
+        })
+
+        new Vue({
+            el: "#box",
+            data: {
+                datalist: [],
+                myitemData: ""
+            },
+            methods: {
+                handleAjax() {
+                    fetch("./json/maizuo.json").then(res => res.json()).then(res => {
+                        console.log(res)
+                        this.datalist = res.data.films
+                    })
+                },
+                handleEvent(data) {
+                    console.log("handleEvent", data)
+                    this.myitemData = data
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

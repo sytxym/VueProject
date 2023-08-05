@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <input type="text" v-model="mytext">
+        <ul>
+            <li v-for="(item,index) in searchValue()" :item="index">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                mytext: "",
+                datalist: ["11", "222", "2221", "111111", "aaa", "ccc", "ddd", "ccc", "33333", "134414", "12313144", "9947511", "ad", "cd"]
+            },
+            methods: {
+                searchValue() {
+                    console.log(this.mytext)
+                    return this.datalist.filter(item=> 
+                         item.includes(this.mytext)
+                    )
+                    
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

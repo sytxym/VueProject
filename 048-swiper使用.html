@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="lib/swiper-bundle.css">
+    <script src="lib/swiper-bundle.js"></script>
+    <style>
+        .swiper {
+            width: 600px;
+            height: 300px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>导航</header>
+    <section>
+        <div class="swiper zenglihua">
+            <div class="swiper-wrapper">
+                <!-- <div class="swiper-slide"><img src="img/banner1.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="img/banner2.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="img/banner1.jpg" alt=""></div> -->
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+
+            <!-- 如果需要导航按钮 -->
+            <!-- <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div> -->
+
+            <!-- 如果需要滚动条 -->
+            <div class="swiper-scrollbar"></div>
+        </div>
+    </section>
+    <footer>底部</footer>
+
+
+
+    <script>
+
+        setTimeout(() => {
+            var list = ["img/banner1.jpg", "img/banner2.jpg", "img/banner1.jpg", "img/banner2.jpg"]
+            var newlist = list.map(item =>
+                `<div class="swiper-slide"><img src="${item}" alt=""></div>
+                `
+            )
+            var swiperwrapper = document.querySelector(".swiper-wrapper")
+            swiperwrapper.innerHTML = newlist.join("")
+            init()
+        }, 500);
+
+        function init() {
+
+            new Swiper(".zenglihua", {
+                pagination: {
+                    el: '.swiper-pagination'
+                },
+                // 如果需要前进后退按钮
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                },// 如果需要滚动条
+                scrollbar: {
+                    el: '.swiper-scrollbar'
+                },
+                loop: true,
+                autoplay: true,//等同于以下设置
+                on: {
+                    slideChange: function () {
+                        console.log("下标", this.activeIndex)
+                    }
+                }
+            })
+        }
+
+    </script>
+</body>
+
+</html>

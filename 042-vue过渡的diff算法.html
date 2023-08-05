@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        /* 在Vue的过渡中，Vue使用了一种基于Virtual DOM的diff算法来比较前后两个状态的元素树，并确定最小的DOM操作来实现过渡效果。这个diff算法被称为"sameVnode"算法。
+
+        Vue的diff算法主要有以下几个步骤：
+
+        1. 首先，Vue会比较两个状态的元素树的根节点，判断它们是否相同。如果根节点不同，Vue会直接替换整个元素。
+
+        2. 如果根节点相同，Vue会进一步比较它们的子节点。Vue会遍历子节点列表，使用一种双指针的方式进行比较。
+
+        3. 在比较子节点时，Vue会根据节点的key属性进行匹配。如果节点的key相同，Vue会认为它们是相同的节点，并进行进一步的比较。
+
+        4. 如果节点的key不同，Vue会将其视为不同的节点，并进行替换操作。
+
+        5. 对于相同的节点，Vue会比较它们的标签名、属性、事件等是否相同。如果这些属性不同，Vue会更新相应的属性。
+
+        6. 对于相同的节点，Vue会递归地比较它们的子节点。
+
+        通过这种diff算法，Vue能够在过渡中找到最小的DOM操作，以实现平滑的过渡效果。这种算法的优势在于它只会更新需要改变的部分，而不会重新渲染整个元素树，从而提高了性能。
+
+        需要注意的是，为了使diff算法能够正常工作，每个节点都应该具有唯一的key属性。这样Vue才能正确地识别节点的变化和移动。
+
+        总结起来，Vue的过渡中使用了一种基于Virtual DOM的diff算法，通过比较前后两个状态的元素树，找到最小的DOM操作来实现过渡效果。这种算法能够提高性能，并确保过渡的平滑性和正确性。 */
+
+
+        function diff(oldVNode, newVNode) {
+            if (oldVNode.key !== newVNode.key) {
+                // 节点的key不同，视为不同的节点，进行替换操作
+                replaceNode(oldVNode, newVNode);
+            } else if (sameVNode(oldVNode, newVNode)) {
+                // 节点相同，进行属性更新
+                updateNode(oldVNode, newVNode);
+                // 递归比较子节点
+                for (let i = 0; i < oldVNode.children.length; i++) {
+                    diff(oldVNode.children[i], newVNode.children[i]);
+                }
+            } else {
+                // 节点不同，进行替换操作
+                replaceNode(oldVNode, newVNode);
+            }
+        }
+
+        function sameVNode(oldVNode, newVNode) {
+            return (
+                oldVNode.tag === newVNode.tag &&
+                oldVNode.key === newVNode.key
+            // 比较其他属性
+            // ...
+         )
+        }
+
+        function replaceNode(oldVNode, newVNode) {
+            // 替换节点的操作
+            // ...
+        }
+
+        function updateNode(oldVNode, newVNode) {
+            // 更新节点的属性
+            // ...
+        }
+
+
+    </script>
+</body>
+
+</html>

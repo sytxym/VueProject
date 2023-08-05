@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <input type="text" v-model="mytext">
+        <ul>
+            <li v-for="(item,index) in datalist" :item="index">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+    <script>
+
+        /*
+        1.方法（methods）事件绑定，逻辑计算，可以不用return，没有缓存
+        2.计算属性（computed）重视结果，解决模板过重问题，必须有return，只求结果，有缓存，做同步操作
+        3.监听（watch）重视过程，监听一个值的改变，不用返回值，同步异步
+        */
+
+        var vm = new Vue({
+            el: "#box",
+            data: {
+                mytext: "",
+                datalist: ["11", "222", "2221", "111111", "aaa", "ccc", "ddd", "ccc", "33333", "134414", "12313144", "9947511", "ad", "cd"],
+                origindataList: ["11", "222", "2221", "111111", "aaa", "ccc", "ddd", "ccc", "33333", "134414", "12313144", "9947511", "ad", "cd"]
+            },
+            watch: {
+                mytext(newval,oldval) {
+                    setTimeout(() => {
+                        console.log("watch", this.mytext,newval,oldval)
+                        var arr = this.origindataList.filter(item => {
+                            return item.includes(this.mytext)
+                        })
+                        this.datalist = arr
+                        // console.log(arr)
+                    }, 1000)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

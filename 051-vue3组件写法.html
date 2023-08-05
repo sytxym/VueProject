@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue3.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <navbar :name="myname">
+            <div>1111</div>
+        </navbar>
+
+        <button @click="show=!show">销毁</button>
+
+        <sidebar v-if="show"></sidebar>
+    </div>
+
+    <script>
+
+        var obj = {
+            data() {
+                return {
+                    myname: "xym",
+                    show:true
+                }
+            },
+            computed: {
+
+            },
+            cretaed() {
+                console.log("cretaed")
+            },
+            mounted() {
+                console.log("mounted")
+            },
+            // beforedestroy() {
+            //     console.log("beforedestroy")
+            // },
+            // destroy() {
+            //     console.log("destroy")
+            //  }
+            //vue3生命周期改变  beforedestroy->beforeUnmounted destroy->unmounted
+            beforeUnmount() {
+                console.log("beforeUnmounted")
+            },
+            unmounted() {
+                console.log("unmounted")
+            }
+
+
+        }
+
+        var app = Vue.createApp(obj)
+        app.component("navbar", {
+            props: ["name"],
+            template: `
+            <div>navbar--{{name}}
+                <slot></slot>
+                </div>
+            `
+        })
+
+        app.component("sidebar", {
+            template: `
+            <div>sidebar
+                </div>
+            `
+        })
+
+        app.mount("#box")
+
+    </script>
+</body>
+
+</html>

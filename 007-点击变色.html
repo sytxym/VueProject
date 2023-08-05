@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .active{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <ul>
+            <li @click="clickChangeColor(index)" v-for="(item,index) in dataList" :class="selected===index?'active':''">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#box",
+            data: { 
+                dataList: ["222","333","4444"],
+                selected: 0
+            },
+            methods: {
+                clickChangeColor(index){
+                   this.selected=index     
+                }
+             }
+        })
+    </script>
+</body>
+</html>

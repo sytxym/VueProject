@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        1111111
+    </div>
+
+    <script>
+        //根组件
+        var vm = new Vue({
+            // el: "#box",
+            data: {
+                myname: "xym"
+            },
+            beforeCreate: function () {
+                console.log('beforeCreate: 组件实例被创建之前');
+                // 在这里无法访问到this
+            },
+            created: function () {
+                console.log('created: 组件实例已创建完成',this.myname);
+                // 在这里可以访问到this
+            },
+            beforeMount: function () {
+                console.log('beforeMount: 组件挂载到DOM之前',this.$el);
+                // 在这里模板已编译完成，但尚未挂载到页面上
+            },
+            mounted: function () {
+                console.log('mounted: 组件已挂载到DOM');
+                // 在这里可以访问到组件的DOM元素
+                //做插件初始化工作
+                //订阅 bus事件总线
+                //发ajax
+            }
+
+        }).$mount("#box")
+    </script>
+</body>
+
+</html>

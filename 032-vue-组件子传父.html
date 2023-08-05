@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+
+        <navbar @myevent="handleEvent"></navbar>
+
+        <slidebar v-show="isShow"></slidebar>
+
+    </div>
+
+    <script>
+
+        Vue.component("navbar", {
+            template: `
+            <div style="background-color: red;">
+            <button @click="handleClick()">点击</button>--导航栏
+            </div>
+            `,
+            methods: {
+                handleClick() {
+                    console.log("子传父，告诉父组件，改您的isShow")
+                    this.$emit("myevent",100)//触发事件，传递并通知父亲，改状态isShow，可以携带数据例如100
+                 }
+             }
+        })
+
+        Vue.component("slidebar", {
+            template: `
+            <div style="background-color: yellow; width:200px; height:600px;">
+            <ul>
+                <li>111</li>
+                <li>22</li>
+                <li>333</li>
+                <li>444</li>
+                <li>555</li>
+            </ul>
+        </div>
+            `
+        })
+
+        new Vue({
+            el: "#box",
+            data: {
+                isShow: true
+            },
+            methods: {
+                handleEvent(data) {
+                    console.log("父亲执行了",data)
+                    this.isShow=!this.isShow
+                 }
+             }
+        })
+    </script>
+</body>
+
+</html>

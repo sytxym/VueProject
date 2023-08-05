@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+
+    <style>
+        body,
+        html {
+            height: 100%;
+        }
+
+        #box {
+            position: relative;
+            background-color: red;
+            height: 100%;
+        }
+
+        footer {
+            width: 100%;
+            background-color: gray;
+            color: white;
+            display: flex;
+            flex-direction: row;
+            text-align: center;
+            height: 50px;
+            line-height: 50px;
+            bottom: 0;
+            position: absolute;
+        }
+
+        footer div {
+            flex: 1;
+        }
+
+        #box>div {
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .kerwin-enter-active{
+            animation: aaa 1.5s;
+        }
+
+        .kerwin-leave-active{
+            animation: aaa 1.5s reverse;
+        }
+
+        @keyframes aaa {
+            0%{
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            100%{
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div id="box">
+
+        <!-- <home v-show="which==='home'"></home>
+        <list v-show="which==='list'"></list>
+        <mine v-show="which==='mine'"></mine> -->
+
+        <!-- keep-alive 缓存  component动态组件 :is指向哪个组件 -->
+        <keep-alive>
+            <transition name="kerwin" mode="out-in">
+                <component :is="which"></component>
+            </transition>
+        </keep-alive>
+        <footer>
+            <div @click="which='home'">
+                首页
+            </div>
+            <div @click="which='list'">
+                列表
+            </div>
+            <div @click="which='mine'">
+                我的
+            </div>
+        </footer>
+    </div>
+
+    <script>
+
+        Vue.component("home", {
+            template: `
+            <div>home
+                <input type="search"/>
+                </div>
+            `
+        })
+
+        Vue.component("list", {
+            template: `
+            <div>list</div>
+            `
+        })
+
+        Vue.component("mine", {
+            template: `
+            <div>mine</div>
+            `
+        })
+
+        new Vue({
+            el: "#box",
+            data: {
+                which: "home"
+            }
+        })
+    </script>
+
+</body>
+
+</html>

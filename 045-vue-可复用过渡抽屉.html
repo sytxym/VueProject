@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+
+    <style>
+
+        /* .left{
+
+        } */
+
+        .right{
+            position: fixed;
+            right: 0px;
+            top: 0px;
+        }
+
+        .left-enter-active {
+            animation: aaa 1.5s;
+        }
+
+        .left-leave-active {
+            animation: aaa 1.5s reverse;
+        }
+
+        @keyframes aaa {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+
+
+        .right-enter-active {
+            animation: bbb 1.5s;
+        }
+
+        .right-leave-active {
+            animation: bbb 1.5s reverse;
+        }
+
+        @keyframes bbb {
+            0% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+
+        <navbar>
+            <button @click="isShow=!isShow">点击</button>--导航栏
+        </navbar>
+
+
+        <slidebar v-show="isShow" mymode="left"></slidebar>
+
+
+
+    </div>
+
+    <script>
+
+        Vue.component("navbar", {
+            template: `
+            <div style="background-color: red; width:200px;">
+             nabber--<slot></slot>   
+            </div> 
+            `
+        })
+
+        Vue.component("slidebar", {
+            props: ["mymode"],
+            template: `
+            <transition :name="mymode">
+                <ul style="background-color: yellow; width:200px; height:600px" :class="mymode">
+                    <li>111</li>
+                    <li>22</li>
+                    <li>333</li>
+                    <li>444</li>
+                    <li>555</li>
+                </ul>
+         </transition>
+            `
+        })
+
+        new Vue({
+            el: "#box",
+            data: {
+                isShow: false
+            },
+            methods: {
+                handleEvent(data) {
+                    console.log("父亲执行了", data)
+                    this.isShow = !this.isShow
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

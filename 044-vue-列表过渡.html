@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+    <style>
+        .kerwin-enter-active {
+            animation: aaa 1.5s;
+        }
+
+        .kerwin-leave-active {
+            animation: aaa 1.5s reverse;
+        }
+
+        @keyframes aaa {
+            0% {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <input type="text" l="mytext">
+        <button @click="handleAdd">add</button>
+        
+        <transition-group name="kerwin" tag="ul">
+            <li v-for="(item,index) in datalist" :key="item">
+                {{item}}
+                <button v-on:click="handleDel(index)">del</button>
+            </li>
+        </transition-group>
+
+        <div v-if="!datalist.length">
+            留言板空空如也
+        </div>
+    </div>
+
+
+    <script>
+        new Vue({
+            el: "#box",
+            data: {
+                datalist: ["1111", "222", "333"],
+                mytext: "adddd",
+                isShow: false
+            },
+            methods: {
+                handleAdd: function () {
+                    console.log(this.mytext)
+                    this.datalist.push(this.mytext)
+                    this.mytext = ""
+                },
+                handleDel: function (index) {
+                    console.log(index)
+                    this.datalist.splice(index, 1)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

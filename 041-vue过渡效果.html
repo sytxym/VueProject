@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 3.5s;
+        }
+
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
+        }
+
+        #box>p{
+            background-color: red;
+            height: 100px;
+        }
+    </style>
+
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+        <div id="box">
+            <transition name="fade" appear mode="out-in">
+                <p v-if="show">这是一个过渡效果示例</p>
+            </transition>
+            <button @click="toggleShow">切换显示</button>
+        </div>
+
+
+    <script>
+        new Vue({
+            el: "#box",
+            data:{
+                show: true
+            },
+            methods: {
+                toggleShow() {
+                    this.show = !this.show;
+                }
+            }
+         })
+        
+    </script>
+</body>
+
+</html>

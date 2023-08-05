@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <button @click="handleGetFetch">fetch get</button>
+        <button @click="handlePostFetch">fetch post</button>
+    </div>
+    <script>
+        var vue = new Vue({
+            el: "#box",
+            methods: {
+                handleGetFetch() {
+                    fetch("http://localhost:3000/user").then(res => res.json()).then(
+                        res => {
+                            console.log(res)
+                        }
+                    ).catch(err => {
+                        console.log(err)
+                    })
+                },
+                handlePostFetch() {
+                    fetch("http://localhost:3000/user",{
+                        method:"POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: '谢佩琪',
+                            age:27
+                         })
+                    }).then(res=>res.json()).then(res=>{
+                        console.log(res)
+                    }).catch (err => {
+                        console.log(err)
+                     })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

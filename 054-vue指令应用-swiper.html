@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="lib/swiper-bundle.css">
+    <script src="lib/swiper-bundle.js"></script>
+    <script src="lib/vue.js"></script>
+
+    <style>
+        .swiper {
+            width: 600px;
+            height: 300px;
+            margin-bottom: 10px;
+        }
+
+        img {
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>导航</header>
+    <section id="box">
+        <div class="swiper zenglihua">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="(item,index) in list" :key="index" v-swiper="{
+                index:index,
+                length:list.length    
+                }"><img :src="item" alt=""></div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+    <footer>底部</footer>
+
+
+
+    <script>
+
+        function init() {
+
+            new Swiper(".zenglihua", {
+                pagination: {
+                    el: '.swiper-pagination'
+                },
+                // 如果需要前进后退按钮
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev'
+                },// 如果需要滚动条
+                scrollbar: {
+                    el: '.swiper-scrollbar'
+                },
+                loop: true,
+                autoplay: true,//等同于以下设置
+                on: {
+                    slideChange: function () {
+                        console.log("下标", this.activeIndex)
+                    }
+                }
+            })
+        }
+
+        Vue.directive("swiper",{
+            inserted: function(el,binding) {
+                console.log("insert",el)
+                let{index,length}=binding.value
+                if(index===length-1){
+                    init()
+                }
+             }
+        })
+
+        new Vue({
+            el: "#box",
+            data: {
+                list: []
+            },
+            mounted: function () {
+                setTimeout(()=>{//模拟ajax异步，延迟一下
+                    this.list=["img/banner1.jpg", "img/banner2.jpg", "img/banner1.jpg", "img/banner2.jpg"]
+                },2000)
+             
+            },
+            updated:function(){
+                // init()
+            }
+            
+        })
+
+    </script>
+</body>
+
+</html>

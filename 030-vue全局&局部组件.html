@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <navbar></navbar>
+        <navbar></navbar>
+    </div>
+    <script>
+        //全局组件写法
+        Vue.component("navbar", {
+            template: `<div style="background:red;border:1px solid gray;margin:20px">
+                    <button @click="handleleft">left</button>
+                    猫眼电影--{{myname}}
+                    <button>right</button>
+                    <child></child>
+                    <xym-child></xym-child>
+                </div>`,
+            methods: {
+                handleleft() {
+                    console.log("left")
+                }
+            },
+            computed: { },
+            watch: {
+
+             },
+             data() {//data是函数写法
+                return {
+                    myname:"xieyongming"
+                 }
+              },
+            components: {//局部组件，只能在内部使用
+                "xymChild":{
+                    template: "<div style='background:gold'>局部孩子</div>",
+                    data() {return{} },
+                    methods: { }
+                }
+             }  
+        })
+
+
+        Vue.component("child",{
+            template:"<div style='background:green'>全局孩子</div>"
+        })
+
+        new Vue({
+            el: "#box"
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue3.js"></script>
+
+    <style>
+
+        *{
+            margin: 10;
+            padding: 0;
+        }
+
+        ul{
+            list-style: none;
+        }
+
+        ul li{
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        ul li img{
+            width: 100px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div id="box">
+        <input type="checkbox" v-model="isAll" v-on:change="allCheck">全选
+        <ul>
+            <li v-for="(item,index) in dataList">
+                <input type="checkbox" v-model="checkList" :value="item" @change="itemCheck">
+                <img :src="item.pic" alt="">
+                
+                <div>
+                    <p>{{item.name}}</p>
+                    <span style="color: red;">￥{{item.price}}</span>
+                </div>
+
+                <div>
+                    <button @click="item.number++" :disabled="item.number===item.limit">&nbsp;+&nbsp; </button>
+                    <span>{{item.number}}</span>
+                    <button @click="item.number--" :disabled="item.number===1">&nbsp;-&nbsp;</button>
+                </div>
+
+                <div>
+                    <button @click="deleteGood(index,item.id)">删除</button>
+                </div>
+                
+            </li>
+        </ul>
+
+        <div>
+            总金额: {{sum()}}<br>
+            {{checkList}}
+        </div>
+    </div>
+
+    <script>
+
+        var dataArr = [
+            {
+                name: "商品3",
+                id: 3,
+                number: 3,
+                limit: 10,
+                price: 30,
+                pic: "https://static.maizuo.com/pc/v5/usr/movie/149ddb9a7f64e06ed474d963cfc6c405.jpg?x-oss-process=image/quality,Q_70"
+            }, {
+                name: "商品2",
+                id: 2,
+                number: 2,
+                limit: 15,
+                price: 50,
+                pic: "https://static.maizuo.com/pc/v5/usr/movie/149ddb9a7f64e06ed474d963cfc6c405.jpg?x-oss-process=image/quality,Q_70"
+            }, {
+                name: "商品1",
+                id: 1,
+                number: 1,
+                limit: 5,
+                price: 90,
+                pic: "https://static.maizuo.com/pc/v5/usr/movie/149ddb9a7f64e06ed474d963cfc6c405.jpg?x-oss-process=image/quality,Q_70"
+            }
+        ]
+
+        var vm=Vue.createApp(
+            {
+                data() {
+                    return {
+                        dataList:dataArr,
+                        checkList:[],
+                        isAll:false
+                     }
+                },
+                methods:{
+                    sum(){
+                        var total=0
+                        this.checkList.forEach(item=>{
+                            total+=item.price*item.number
+                        })
+                        return total
+                    },
+                    deleteGood(index,id){
+                        console.log(index,this.dataList[index].id,id)
+                        this.checkList=this.checkList.filter(item=>{
+                            return item.id!==this.dataList[index].id
+                        })
+                        this.dataList.splice(index, 1)
+                        this.itemCheck()
+                        
+                    },
+                    allCheck(){
+                        if(this.isAll){
+                            this.checkList=this.dataList
+                        }else{
+                            this.checkList=[]
+                        }
+                        console.log(this.isAll,this.checkList.length)
+                    },
+                    itemCheck(){
+                        if(this.checkList.length===this.dataList.length){
+                            this.isAll=true
+                        }else{
+                            this.isAll=false
+                        }
+                    }
+                 }
+
+            }
+
+        ).mount("#box")
+    </script>
+</body>
+
+</html>

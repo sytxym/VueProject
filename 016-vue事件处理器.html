@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue.js"></script>
+</head>
+
+<body>
+
+    <script>
+        // 在Vue中, 事件处理器用于响应用户的交互操作, 例如点击、输入、滚动等。
+        // Vue提供了多种方式来处理事件:
+        /* 
+        1. 使用`v-on`指令: 你可以使用`v-on`指令来监听DOM事件并触发相应的方法。例如,
+            `<button v-on:click="handleClick">Click me</button>`
+            会在按钮被点击时调用`handleClick`方法。你也可以使用简写形式`@`来代替`v-on`, 例如`<button @click="handleClick">Click me</button>`。
+
+        2. 事件修饰符: Vue提供了一些事件修饰符, 用于处理特定的事件行为。例如, `.stop`修饰符可以阻止事件冒泡, `.prevent`修饰符可以阻止默认事件, `.capture`修饰符可以将事件监听添加到捕获阶段, `.once`修饰符可以只触发一次事件。例如, `<a v-on:click.stop="handleClick">Click me</a>`会阻止点击事件冒泡。
+
+        3. 方法调用: 你可以直接调用方法来处理事件, 而不使用`v-on`指令。例如, `<button @click="handleClick">Click me</button>`会在按钮被点击时调用`handleClick`方法。
+
+        4. 事件对象: 当事件被触发时, Vue会自动将事件对象作为参数传递给事件处理器。你可以在方法中使用`$event`来访问事件对象的属性。例如, `<button @click="handleClick($event)">Click me</button>`会将事件对象传递给`handleClick`方法。
+
+        5. 内联语句: 除了将事件处理器定义为方法外, 你还可以在模板中使用内联语句来处理事件。例如, `<button @click="counter++">Increment</button>`会在按钮被点击时增加一个计数器的值。
+
+        需要注意的是, 事件处理器可以是Vue实例中定义的方法, 也可以是计算属性或观察者函数。无论使用哪种方式, 事件处理器都应该被定义在Vue实例的`methods`选项中, 以确保作用域和上下文的正确性. */
+    </script>
+
+    <div id="box">
+        {{count}}
+        <button @click="handerclick($event,1,2,3)">add-1-函数表达式,可以传参</button>   
+        <button @click="handerclick2">add-1-函数名</button>
+        <button @click="click++">add-1-表达式方式</button>
+        
+        <input type="text" @input="handerinput($event)">
+
+        <ul @click.self="handerUlclick">
+            <li @click.stop="handerLiclick($event)">111</li>
+            <li @click="handerLiclick">222</li>
+            <li @click="handerLiclick">333</li>
+        </ul>
+    </div>
+     
+    <script>
+
+        new Vue({
+            el: "#box",
+            data: {
+                count:1
+             },
+             methods: {
+                handerclick(evt,a,b,c){
+                    this.count++
+                    console.log(evt,a,b,c)
+                },
+                handerclick2(){
+
+                },
+                handerinput(evt){
+                    console.log("input",evt)
+                },
+                handerUlclick(){
+                    console.log("handerUlclick")
+                },
+                handerLiclick(evt){
+                    // evt.stopPropagation()
+                    console.log("handerLiclick")
+                }
+
+              }
+        })
+
+    </script>
+
+</body>
+
+</html>

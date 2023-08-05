@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/vue3.js"></script>
+    <style>
+        ul li{
+            display: flex;
+        }
+
+        ul li img{
+            width: 100px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <button @click="getList">get</button>
+        <ul>
+            <li v-for="item of datalist" :key="item.fimId">
+                <img :src="item.poster" alt="">
+                <h1>{{item.name}}</h1>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var vm = Vue.createApp({
+            data() {
+                return {
+                    datalist: []
+                }
+            },
+            methods: {
+                getList() {
+                    fetch("https://m.maizuo.com/gateway?cityId=310100&pageNum=1&pageSize=10&type=1&k=2464406", {
+                        headers: {
+                            'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.2.1","e":"1688721161304689274945537","bc":"310100"}',
+                            'X-Host': 'mall.film-ticket.film.list'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        this.datalist = res.data.films
+                    })
+                }
+            }
+        }).mount("#box")
+
+        vm.getList()
+
+    </script>
+</body>
+
+</html>
